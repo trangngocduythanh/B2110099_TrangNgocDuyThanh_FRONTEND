@@ -17,22 +17,19 @@
             <p v-else>Không có liên hệ nào.</p>
 
             <div class="mt-3 row justify-content-around align-items-center">
-                <button class="btn btn-sm btn-primary" @click="refreshList()">
-                    <i class="fas fa-redo"></i>
-                    Làm mới
+                <button class="btn btn-sm btn-primary" @click="refreshList">
+                    <i class="fas fa-redo"></i> Làm mới
                 </button>
 
                 <button class="btn btn-sm btn-success" @click="goToAddContact">
-                    <i class="fas fa-plus"></i>
-                    Thêm mới
+                    <i class="fas fa-plus"></i>Thêm mới
                 </button>
 
                 <button
                     class="btn btn-sm btn-danger"
                     @click="removeAllContacts"
                 >
-                    <i class="fas fa-trash"></i>
-                    Xóa tất cả
+                    <i class="fas fa-trash"></i> Xóa tất cả
                 </button>
             </div>
         </div>
@@ -50,8 +47,8 @@
                     }"
                 >
                     <span class="mt-2 badge badge-warning">
-                        <i class="fas fa-edit">Hiệu chỉnh</i>
-                    </span>
+                        <i class="fas fa-edit"></i> Hiệu chỉnh</span
+                    >
                 </router-link>
             </div>
         </div>
@@ -80,15 +77,15 @@ export default {
     },
 
     watch: {
-        // Giám sát các thay đổi của biến searchText.
-        // Bỏ chọn phần tử đang được chọn trong danh sách.
+        //Giám sát các thay đổi của biến searchText.
+        //Bỏ chọn phần từ đang được chọn trong danh sách
         searchText() {
             this.activeIndex = -1;
         },
     },
 
     computed: {
-        // Chuyển đổi các đối tượng thành chuỗi để tiện tìm kiếm
+        //Chuyển đổi các đối tượng thành chuỗi để tiện tìm kiếm
         contactStrings() {
             return this.contacts.map((contact) => {
                 const { name, email, address, phone } = contact;
@@ -96,7 +93,7 @@ export default {
             });
         },
 
-        // Trả về contact có chứa thông tin cần tìm kiếm
+        //Trả về contact có chứa thông tin cần tìm kiếm
         filteredContacts() {
             if (!this.searchText) return this.contacts;
             return this.contacts.filter((_contact, index) =>
@@ -129,7 +126,7 @@ export default {
         },
 
         async removeAllContacts() {
-            if (confirm("Bạn muốn xóa tất cả liên hệ?")) {
+            if (confirm("Bạn muốn xoá tất cả liên hệ?")) {
                 try {
                     await ContactService.deleteAll();
                     this.refreshList();
@@ -156,3 +153,21 @@ export default {
     max-width: 750px;
 }
 </style>
+
+<!-- 
+
+    Chức năng: 
+    🔹 Hiển thị danh sách danh bạ và cho phép người dùng:
+	•	Tìm kiếm danh bạ (🔍 InputSearch)
+	•	Xem danh sách danh bạ (📋 ContactList)
+	•	Xem chi tiết liên hệ (🆔 ContactCard)
+	•	Thực hiện các thao tác:
+	        Làm mới danh sách
+		    Thêm liên hệ mới
+		    Xóa tất cả danh bạ
+
+
+    v-model để đồng bộ dữ liệu cha và con
+    v-if="activeContact": Chỉ hiển thị khi có liên hệ được chọn.
+
+-->
